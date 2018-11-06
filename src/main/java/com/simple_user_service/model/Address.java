@@ -9,11 +9,12 @@ package com.simple_user_service.model;
  */
 public class Address {
 
-	private final Long id;
-	private final Integer cep;
+	private final Integer id;
+	private final Integer postalCode;
 	private final String street;
 	private final Integer number;
 	private final String district;
+	private final String city;
 	private final String state;
 	private final String country;
 
@@ -21,22 +22,24 @@ public class Address {
 
 	/**
 	 * @param id
-	 * @param cep
+	 * @param postalCode
 	 * @param street
 	 * @param number
 	 * @param district
+	 * @param city
 	 * @param state
 	 * @param country
 	 * @param user
 	 */
-	public Address(Long id, Integer cep, String street, Integer number, String district, String state, String country,
-			User user) {
+	public Address(Integer id, Integer postalCode, String street, Integer number, String district, String city,
+			String state, String country, User user) {
 		super();
 		this.id = id;
-		this.cep = cep;
+		this.postalCode = postalCode;
 		this.street = street;
 		this.number = number;
 		this.district = district;
+		this.city = city;
 		this.state = state;
 		this.country = country;
 		this.user = user;
@@ -81,22 +84,23 @@ public class Address {
 	 */
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", cep=" + cep + ", street=" + street + ", number=" + number + ", district="
-				+ district + ", state=" + state + ", country=" + country + ", user=" + user + "]";
+		return "Address [id=" + id + ", postalCode=" + postalCode + ", street=" + street + ", number=" + number
+				+ ", district=" + district + ", city=" + city + ", state=" + state + ", country=" + country + ", user="
+				+ user + "]";
 	}
 
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	/**
-	 * @return the cep
+	 * @return the postalCode
 	 */
-	public Integer getCep() {
-		return cep;
+	public Integer getPostalCode() {
+		return postalCode;
 	}
 
 	/**
@@ -121,6 +125,13 @@ public class Address {
 	}
 
 	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
 	 * @return the state
 	 */
 	public String getState() {
@@ -132,6 +143,13 @@ public class Address {
 	 */
 	public String getCountry() {
 		return country;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
 	}
 
 }

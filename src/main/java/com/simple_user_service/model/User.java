@@ -8,7 +8,7 @@ package com.simple_user_service.model;
  *
  */
 public class User {
-	private final Long id;
+	private final Integer id;
 	private final String firstName;
 	private final String lastName;
 	private final String cpf;
@@ -20,7 +20,7 @@ public class User {
 	 * @param cpf
 	 * @param address
 	 */
-	public User(Long id, String firstName, String lastName, String cpf) {
+	public User(Integer id, String firstName, String lastName, String cpf) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -73,7 +73,7 @@ public class User {
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
