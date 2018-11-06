@@ -33,9 +33,14 @@ public class UserService {
 	}
 
 	public int save(User user) {
-		log.info(String.format("Inserting User: %s", user.toString()));
-		return this.jdbcTemplate.update("INSERT INTO TB_USER(FIRST_NAME, LAST_NAME, CPF) VALUES (?, ?, ?)",
-				user.getFirstName(), user.getLastName(), user.getCpf());
+		log.info(String.format("Saving User: %s", user.toString()));
+		if (user.getId() == null) {
+			return this.jdbcTemplate.update("INSERT INTO TB_USER(FIRST_NAME, LAST_NAME, CPF) VALUES (?, ?, ?)",
+					user.getFirstName(), user.getLastName(), user.getCpf());
+		} else {
+			return this.jdbcTemplate.update("UPDATE TB_USER SET FIRST_NAME = ?, LAST_NAME = ?, CPF = ? WHERE ID = ?",
+					user.getFirstName(), user.getLastName(), user.getCpf(), user.getId());
+		}
 	}
 
 	public List<User> findAll() {
