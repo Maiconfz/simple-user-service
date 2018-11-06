@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.simple_user_service.jdbc_template.UserRowMapper;
 import com.simple_user_service.model.User;
 
 /**
@@ -38,14 +39,11 @@ public class UserService {
 	}
 
 	public List<User> findAll() {
-		return jdbcTemplate.query("SELECT ID, FIRST_NAME, LAST_NAME, CPF FROM TB_USER",
-				(rs, rowNum) -> new User(rs.getInt("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
-						rs.getString("CPF")));
+		return jdbcTemplate.query("SELECT ID, FIRST_NAME, LAST_NAME, CPF FROM TB_USER", UserRowMapper.getInstance());
 	}
 
 	public User findByCPF(String cpf) {
 		return jdbcTemplate.queryForObject("SELECT ID, FIRST_NAME, LAST_NAME, CPF FROM TB_USER WHERE CPF = ?",
-				new Object[] { cpf }, (rs, rowNum) -> new User(rs.getInt("id"), rs.getString("FIRST_NAME"),
-						rs.getString("LAST_NAME"), rs.getString("CPF")));
+				new Object[] { cpf }, UserRowMapper.getInstance());
 	}
 }
