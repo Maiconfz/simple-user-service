@@ -44,7 +44,11 @@ public class UserEndpoint {
 
 		User responseUser = getWsUserFrom(user);
 
-		Address responseAddress = new Address();
+		com.simple_user_service.model.Address address = this.addressService.findByUserId(user.getId());
+
+		Address responseAddress = getWsAddressFrom(address);
+
+		responseUser.setAddress(responseAddress);
 		response.setUser(responseUser);
 
 		return response;
@@ -65,6 +69,19 @@ public class UserEndpoint {
 		wsUser.setLastName(user.getLastName());
 		wsUser.setCpf(user.getCpf());
 		return wsUser;
+	}
+
+	private Address getWsAddressFrom(com.simple_user_service.model.Address address) {
+		Address responseAddress = new Address();
+		responseAddress.setId(BigInteger.valueOf(address.getId().longValue()));
+		responseAddress.setPostalCode(BigInteger.valueOf(address.getPostalCode().longValue()));
+		responseAddress.setStreet(address.getStreet());
+		responseAddress.setNumber(BigInteger.valueOf(address.getNumber().longValue()));
+		responseAddress.setDistrict(address.getDistrict());
+		responseAddress.setCity(address.getCity());
+		responseAddress.setState(address.getState());
+		responseAddress.setCountry(address.getCountry());
+		return responseAddress;
 	}
 
 }
