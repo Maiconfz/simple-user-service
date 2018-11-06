@@ -1,0 +1,42 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:tns="http://ws.simple-user-service.com" targetNamespace="http://ws.simple-user-service.com" elementFormDefault="qualified">
+
+    <xs:element name="getUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cpf" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="tns:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="id" type="xs:integer"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="cpf" type="xs:string"/>
+            <xs:element name="address" type="tns:address"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="address">
+        <xs:sequence>
+            <xs:element name="id" type="xs:integer"/>
+            <xs:element name="postalCode" type="xs:integer"/>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="number" type="xs:integer"/>
+            <xs:element name="district" type="xs:string"/>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="state" type="xs:string"/>
+            <xs:element name="country" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
