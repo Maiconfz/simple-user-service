@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.simple_user_service.jdbc_template.AddressRowMapper;
 import com.simple_user_service.model.Address;
-import com.simple_user_service.model.User;
 
 /**
  * @author MaiconFonsecaZanco
@@ -39,11 +39,13 @@ public class AddressService {
 	public List<Address> findAll() {
 		return jdbcTemplate.query(
 				"SELECT AD.ID, AD.POSTAL_CODE, AD.STREET, AD.NUMBER, AD.DISTRICT, AD.CITY, AD.STATE, AD.COUNTRY, U.ID AS USER_ID, U.FIRST_NAME AS USER_FIRST_NAME, U.LAST_NAME AS USER_LAST_NAME, U.CPF AS USER_CPF FROM TB_ADDRESS AD JOIN TB_USER U ON AD.USER_ID = U.ID",
-				(rs, rowNum) -> new Address(new Integer(rs.getInt("ID")), new Integer(rs.getInt("POSTAL_CODE")),
-						rs.getString("STREET"), new Integer(rs.getInt("NUMBER")), rs.getString("DISTRICT"),
-						rs.getString("CITY"), rs.getString("STATE"), rs.getString("COUNTRY"),
-						new User(new Integer(rs.getInt("USER_ID")), rs.getString("USER_FIRST_NAME"),
-								rs.getString("USER_LAST_NAME"), rs.getString("USER_CPF"))));
+				AddressRowMapper.getInstance());
+	}
+
+	public Address findByUserId(Integer id) {
+		return jdbcTemplate.queryForObject(
+				"SELECT AD.ID, AD.POSTAL_CODE, AD.STREET, AD.NUMBER, AD.DISTRICT, AD.CITY, AD.STATE, AD.COUNTRY, U.ID AS USER_ID, U.FIRST_NAME AS USER_FIRST_NAME, U.LAST_NAME AS USER_LAST_NAME, U.CPF AS USER_CPF FROM TB_ADDRESS AD JOIN TB_USER U ON AD.USER_ID = U.ID WHERE AD.USER_ID = ?",
+				new Object[] { id }, AddressRowMapper.getInstance());
 	}
 
 }
