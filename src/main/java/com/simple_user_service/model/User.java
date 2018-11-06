@@ -12,7 +12,6 @@ public class User {
 	private final String firstName;
 	private final String lastName;
 	private final String cpf;
-	private final Address address;
 
 	/**
 	 * @param id
@@ -21,13 +20,12 @@ public class User {
 	 * @param cpf
 	 * @param address
 	 */
-	public User(Long id, String firstName, String lastName, String cpf, Address address) {
+	public User(Long id, String firstName, String lastName, String cpf) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.cpf = cpf;
-		this.address = address;
 	}
 
 	/*
@@ -37,8 +35,7 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", cpf=" + cpf + ", address="
-				+ address + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", cpf=" + cpf + "]";
 	}
 
 	/*
@@ -99,13 +96,6 @@ public class User {
 	 */
 	public String getCpf() {
 		return cpf;
-	}
-
-	/**
-	 * @return the address
-	 */
-	public Address getAddress() {
-		return address;
 	}
 
 }

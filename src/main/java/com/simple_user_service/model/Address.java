@@ -17,6 +17,8 @@ public class Address {
 	private final String state;
 	private final String country;
 
+	private final User user;
+
 	/**
 	 * @param id
 	 * @param cep
@@ -25,8 +27,10 @@ public class Address {
 	 * @param district
 	 * @param state
 	 * @param country
+	 * @param user
 	 */
-	public Address(Long id, Integer cep, String street, Integer number, String district, String state, String country) {
+	public Address(Long id, Integer cep, String street, Integer number, String district, String state, String country,
+			User user) {
 		super();
 		this.id = id;
 		this.cep = cep;
@@ -35,6 +39,7 @@ public class Address {
 		this.district = district;
 		this.state = state;
 		this.country = country;
+		this.user = user;
 	}
 
 	/*
@@ -77,7 +82,7 @@ public class Address {
 	@Override
 	public String toString() {
 		return "Address [id=" + id + ", cep=" + cep + ", street=" + street + ", number=" + number + ", district="
-				+ district + ", state=" + state + ", country=" + country + "]";
+				+ district + ", state=" + state + ", country=" + country + ", user=" + user + "]";
 	}
 
 	/**

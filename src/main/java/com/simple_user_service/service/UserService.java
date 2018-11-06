@@ -40,6 +40,6 @@ public class UserService {
 	public List<User> findAll() {
 		return jdbcTemplate.query("SELECT ID, FIRST_NAME, LAST_NAME, CPF FROM TB_USER",
 				(rs, rowNum) -> new User(rs.getLong("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
-						rs.getString("CPF"), null));
+						rs.getString("CPF")));
 	}
 }

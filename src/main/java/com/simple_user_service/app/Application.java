@@ -56,9 +56,9 @@ public class Application implements CommandLineRunner {
 				"CREATE TABLE TB_USER(ID SERIAL, FIRST_NAME VARCHAR(255), LAST_NAME VARCHAR(255), CPF VARCHAR(11), ADDRESS_ID INT)");
 
 		List<User> users = new ArrayList<User>();
-		users.add(new User(null, "Enrico", "Pietro Mateus Pires", "24281154566", null));
-		users.add(new User(null, "Nicolas", "Vicente Jorge Porto", "31938839480", null));
-		users.add(new User(null, "Diogo", "Vinicius Lucas da Rocha", "31938839480", null));
+		users.add(new User(null, "Enrico", "Pietro Mateus Pires", "24281154566"));
+		users.add(new User(null, "Nicolas", "Vicente Jorge Porto", "31938839480"));
+		users.add(new User(null, "Diogo", "Vinicius Lucas da Rocha", "31938839480"));
 		users.forEach(user -> this.userService.save(user));
 
 	}
