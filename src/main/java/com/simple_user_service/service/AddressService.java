@@ -29,11 +29,19 @@ public class AddressService {
 	}
 
 	public int save(Address address) {
-		log.info(String.format("Inserting Address: %s", address.toString()));
-		return this.jdbcTemplate.update(
-				"INSERT INTO TB_ADDRESS(POSTAL_CODE, STREET, NUMBER, DISTRICT, CITY, STATE, COUNTRY, USER_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-				address.getPostalCode(), address.getStreet(), address.getNumber(), address.getDistrict(),
-				address.getCity(), address.getState(), address.getCountry(), address.getUser().getId());
+		log.info(String.format("Saving Address: %s", address.toString()));
+		if (address.getId() == null) {
+			return this.jdbcTemplate.update(
+					"INSERT INTO TB_ADDRESS(POSTAL_CODE, STREET, NUMBER, DISTRICT, CITY, STATE, COUNTRY, USER_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+					address.getPostalCode(), address.getStreet(), address.getNumber(), address.getDistrict(),
+					address.getCity(), address.getState(), address.getCountry(), address.getUser().getId());
+		} else {
+			return this.jdbcTemplate.update(
+					"UPDATE TB_ADDRESS SET POSTAL_CODE = ?, STREET = ?, NUMBER = ?, DISTRICT = ?, CITY = ?, STATE = ?, COUNTRY = ?, USER_ID = ? WHERE ID = ?",
+					address.getPostalCode(), address.getStreet(), address.getNumber(), address.getDistrict(),
+					address.getCity(), address.getState(), address.getCountry(), address.getUser().getId(),
+					address.getId());
+		}
 	}
 
 	public List<Address> findAll() {
