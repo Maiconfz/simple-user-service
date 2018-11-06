@@ -37,21 +37,34 @@ public class UserEndpoint {
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
 	@ResponsePayload
-	public GetUserResponse getCountry(@RequestPayload GetUserRequest request) {
+	public GetUserResponse getUser(@RequestPayload GetUserRequest request) {
 		GetUserResponse response = new GetUserResponse();
 
-		User responseUser = new User();
 		com.simple_user_service.model.User user = this.userService.findByCPF(request.getCpf());
 
-		responseUser.setId(BigInteger.valueOf(user.getId().longValue()));
-		responseUser.setFirstName(user.getFirstName());
-		responseUser.setLastName(user.getLastName());
-		responseUser.setCpf(user.getCpf());
+		User responseUser = getWsUserFrom(user);
 
 		Address responseAddress = new Address();
 		response.setUser(responseUser);
 
 		return response;
+	}
+
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllUsersRequest")
+	@ResponsePayload
+	public GetAllUsersResponse getAllUsers(@RequestPayload GetAllUsersRequest request) {
+		GetAllUsersResponse response = new GetAllUsersResponse();
+		this.userService.findAll().forEach(user -> response.getUser().add(this.getWsUserFrom(user)));
+		return response;
+	}
+
+	private User getWsUserFrom(com.simple_user_service.model.User user) {
+		User wsUser = new User();
+		wsUser.setId(BigInteger.valueOf(user.getId().longValue()));
+		wsUser.setFirstName(user.getFirstName());
+		wsUser.setLastName(user.getLastName());
+		wsUser.setCpf(user.getCpf());
+		return wsUser;
 	}
 
 }
