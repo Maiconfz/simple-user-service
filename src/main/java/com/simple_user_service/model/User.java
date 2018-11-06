@@ -8,7 +8,7 @@ package com.simple_user_service.model;
  *
  */
 public class User {
-	private final long id;
+	private final Long id;
 	private final String firstName;
 	private final String lastName;
 	private final String cpf;
@@ -21,7 +21,7 @@ public class User {
 	 * @param cpf
 	 * @param address
 	 */
-	public User(long id, String firstName, String lastName, String cpf, Address address) {
+	public User(Long id, String firstName, String lastName, String cpf, Address address) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -37,8 +37,8 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", cpf=" + cpf + ", address=" + address
-				+ "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", cpf=" + cpf + ", address="
+				+ address + "]";
 	}
 
 	/*
@@ -76,7 +76,7 @@ public class User {
 	/**
 	 * @return the id
 	 */
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

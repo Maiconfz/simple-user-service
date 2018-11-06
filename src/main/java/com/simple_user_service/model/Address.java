@@ -9,10 +9,10 @@ package com.simple_user_service.model;
  */
 public class Address {
 
-	private final long id;
-	private final int cep;
+	private final Long id;
+	private final Integer cep;
 	private final String street;
-	private final int number;
+	private final Integer number;
 	private final String district;
 	private final String state;
 	private final String country;
@@ -26,7 +26,7 @@ public class Address {
 	 * @param state
 	 * @param country
 	 */
-	public Address(long id, int cep, String street, int number, String district, String state, String country) {
+	public Address(Long id, Integer cep, String street, Integer number, String district, String state, String country) {
 		super();
 		this.id = id;
 		this.cep = cep;
@@ -83,14 +83,14 @@ public class Address {
 	/**
 	 * @return the id
 	 */
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
 	/**
 	 * @return the cep
 	 */
-	public int getCep() {
+	public Integer getCep() {
 		return cep;
 	}
 
@@ -104,7 +104,7 @@ public class Address {
 	/**
 	 * @return the number
 	 */
-	public int getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 
