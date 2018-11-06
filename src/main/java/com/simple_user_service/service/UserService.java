@@ -39,7 +39,13 @@ public class UserService {
 
 	public List<User> findAll() {
 		return jdbcTemplate.query("SELECT ID, FIRST_NAME, LAST_NAME, CPF FROM TB_USER",
-				(rs, rowNum) -> new User(rs.getLong("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
+				(rs, rowNum) -> new User(rs.getInt("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
 						rs.getString("CPF")));
+	}
+
+	public User findByCPF(String cpf) {
+		return jdbcTemplate.queryForObject("SELECT ID, FIRST_NAME, LAST_NAME, CPF FROM TB_USER WHERE CPF = ?",
+				new Object[] { cpf }, (rs, rowNum) -> new User(rs.getInt("id"), rs.getString("FIRST_NAME"),
+						rs.getString("LAST_NAME"), rs.getString("CPF")));
 	}
 }
