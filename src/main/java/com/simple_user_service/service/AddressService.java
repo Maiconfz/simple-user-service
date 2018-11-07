@@ -44,6 +44,17 @@ public class AddressService {
 		}
 	}
 
+	public int delete(Address address) {
+		log.info(String.format("Deleting Address: %s", String.valueOf(address)));
+		if (address.getId() != null) {
+			return this.jdbcTemplate.update("DELETE TB_ADDRESS WHERE ID = ?", address.getId());
+		} else if (address.getUser() != null && address.getUser().getId() != null) {
+			return this.jdbcTemplate.update("DELETE TB_ADDRESS WHERE USER_ID = ?", address.getUser().getId());
+		} else {
+			throw new IllegalArgumentException("Can't delete address without id and userId");
+		}
+	}
+
 	public List<Address> findAll() {
 		return jdbcTemplate.query(
 				"SELECT AD.ID, AD.POSTAL_CODE, AD.STREET, AD.NUMBER, AD.DISTRICT, AD.CITY, AD.STATE, AD.COUNTRY, U.ID AS USER_ID, U.FIRST_NAME AS USER_FIRST_NAME, U.LAST_NAME AS USER_LAST_NAME, U.CPF AS USER_CPF FROM TB_ADDRESS AD JOIN TB_USER U ON AD.USER_ID = U.ID",
