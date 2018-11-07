@@ -83,6 +83,26 @@ public class UserEndpoint {
 		return response;
 	}
 
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteUserRequest")
+	@ResponsePayload
+	public DeleteUserResponse deleteUser(@RequestPayload DeleteUserRequest request) {
+		DeleteUserResponse response = new DeleteUserResponse();
+		try {
+			if (request.getUser() != null) {
+				com.simple_user_service.model.User modelUser = this.getModelUserFrom(request.getUser());
+				this.userService.delete(modelUser);
+				this.addressService.delete(new com.simple_user_service.model.Address(null, null, null, null, null, null,
+						null, null, modelUser));
+			}
+			response.setStatus("SUCCESS");
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setStatus("ERROR: " + String.valueOf(e));
+		}
+
+		return response;
+	}
+
 	private User getWsUserFrom(com.simple_user_service.model.User user) {
 		User wsUser = new User();
 		wsUser.setId(BigInteger.valueOf(user.getId().longValue()));
