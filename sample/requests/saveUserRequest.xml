@@ -1,0 +1,22 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:gs="http://ws.simple-user-service.com">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:saveUserRequest>
+            <gs:user>
+                <gs:firstName>Kevin</gs:firstName>
+                <gs:lastName>Fabio Santos</gs:lastName>
+                <gs:cpf>80684971291</gs:cpf>
+                <gs:address>
+                    <gs:postalCode>91215060</gs:postalCode>
+                    <gs:street>Rua Coronel Joao Pacheco de Freitas</gs:street>
+                    <gs:number>614</gs:number>
+                    <gs:district>Jardim Itu Sabara</gs:district>
+                    <gs:city>Porto Alegre</gs:city>
+                    <gs:state>RS</gs:state>
+                    <gs:country>Brasil</gs:country>
+                </gs:address>
+            </gs:user>
+        </gs:saveUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

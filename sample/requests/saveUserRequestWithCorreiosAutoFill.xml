@@ -1,0 +1,17 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:gs="http://ws.simple-user-service.com">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:saveUserRequest>
+            <gs:user>
+                <gs:firstName>Maicon</gs:firstName>
+                <gs:lastName>Fonseca Zanco</gs:lastName>
+                <gs:cpf>123456789</gs:cpf>
+                <gs:address>
+                    <gs:postalCode>24730045</gs:postalCode>
+                    <gs:number>76</gs:number>
+                </gs:address>
+            </gs:user>
+        </gs:saveUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

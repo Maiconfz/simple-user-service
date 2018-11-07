@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+				  xmlns:gs="http://ws.simple-user-service.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <gs:getAllUsersRequest>
+         <gs:msg>1</gs:msg>
+      </gs:getAllUsersRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

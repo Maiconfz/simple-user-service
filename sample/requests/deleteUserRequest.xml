@@ -1,0 +1,11 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:gs="http://ws.simple-user-service.com">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:deleteUserRequest>
+            <gs:user>
+                <gs:id>3</gs:id>
+            </gs:user>
+        </gs:deleteUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
