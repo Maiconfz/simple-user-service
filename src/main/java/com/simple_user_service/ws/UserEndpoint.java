@@ -62,6 +62,27 @@ public class UserEndpoint {
 		return response;
 	}
 
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "saveUserRequest")
+	@ResponsePayload
+	public SaveUserResponse saveUser(@RequestPayload SaveUserRequest request) {
+		SaveUserResponse response = new SaveUserResponse();
+		try {
+			this.userService.save(this.getModelUserFrom(request.getUser()));
+
+			com.simple_user_service.model.User persistedUser = this.userService.findByCPF(request.getUser().getCpf());
+
+			this.addressService.save(this.getModelAddressFrom(request.getUser().getAddress(), persistedUser));
+
+			response.setStatus("SUCCESS");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setStatus("ERROR: " + String.valueOf(e));
+		}
+
+		return response;
+	}
+
 	private User getWsUserFrom(com.simple_user_service.model.User user) {
 		User wsUser = new User();
 		wsUser.setId(BigInteger.valueOf(user.getId().longValue()));
@@ -82,6 +103,19 @@ public class UserEndpoint {
 		responseAddress.setState(address.getState());
 		responseAddress.setCountry(address.getCountry());
 		return responseAddress;
+	}
+
+	private com.simple_user_service.model.User getModelUserFrom(User user) {
+		return new com.simple_user_service.model.User(user.getId() != null ? user.getId().intValue() : null,
+				user.getFirstName(), user.getLastName(), user.getCpf());
+	}
+
+	private com.simple_user_service.model.Address getModelAddressFrom(Address address,
+			com.simple_user_service.model.User modelUser) {
+		return new com.simple_user_service.model.Address(address.getId() != null ? address.getId().intValue() : null,
+				address.getPostalCode() != null ? address.getPostalCode().intValue() : null, address.getStreet(),
+				address.getNumber() != null ? address.getNumber().intValue() : null, address.getDistrict(),
+				address.getCity(), address.getState(), address.getCountry(), modelUser);
 	}
 
 }
