@@ -11,7 +11,11 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.example.generated.EnderecoERP;
+import com.example.generated.SQLException_Exception;
+import com.example.generated.SigepClienteException;
 import com.simple_user_service.service.AddressService;
+import com.simple_user_service.service.CorreiosService;
 import com.simple_user_service.service.UserService;
 
 /**
@@ -24,15 +28,19 @@ public class UserEndpoint {
 
 	private final UserService userService;
 	private final AddressService addressService;
+	private final CorreiosService correiosService;
 
 	/**
 	 * @param userService
 	 * @param addressService
+	 * @param correiosService
 	 */
 	@Autowired
-	public UserEndpoint(UserService userService, AddressService addressService) {
+	public UserEndpoint(UserService userService, AddressService addressService, CorreiosService correiosService) {
+		super();
 		this.userService = userService;
 		this.addressService = addressService;
+		this.correiosService = correiosService;
 	}
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
@@ -70,7 +78,7 @@ public class UserEndpoint {
 			this.userService.save(this.getModelUserFrom(request.getUser()));
 
 			com.simple_user_service.model.User persistedUser = this.userService.findByCPF(request.getUser().getCpf());
-
+			this.fillEmptyAddressDataFromCorreios(request.getUser().getAddress());
 			this.addressService.save(this.getModelAddressFrom(request.getUser().getAddress(), persistedUser));
 
 			response.setStatus("SUCCESS");
@@ -136,6 +144,38 @@ public class UserEndpoint {
 				address.getPostalCode() != null ? address.getPostalCode().intValue() : null, address.getStreet(),
 				address.getNumber() != null ? address.getNumber().intValue() : null, address.getDistrict(),
 				address.getCity(), address.getState(), address.getCountry(), modelUser);
+	}
+
+	private void fillEmptyAddressDataFromCorreios(Address address) {
+		if (address != null && address.getPostalCode() != null) {
+			try {
+				EnderecoERP enderecoERP = this.correiosService.consultaCEP(String.valueOf(address.getPostalCode()));
+
+				if (address.getStreet() == null) {
+					address.setStreet(enderecoERP.getEnd());
+				}
+
+				if (address.getDistrict() == null) {
+					address.setDistrict(enderecoERP.getBairro());
+				}
+
+				if (address.getCity() == null) {
+					address.setCity(enderecoERP.getCidade());
+				}
+
+				if (address.getState() == null) {
+					address.setState(enderecoERP.getUf());
+				}
+
+				if (address.getCountry() == null) {
+					address.setCountry("Brasil");
+				}
+
+			} catch (SQLException_Exception | SigepClienteException e) {
+				// TODO Enhance this
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
