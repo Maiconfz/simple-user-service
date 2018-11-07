@@ -43,6 +43,17 @@ public class UserService {
 		}
 	}
 
+	public int delete(User user) {
+		log.info(String.format("Deleting User: %s", String.valueOf(user.toString())));
+		if (user.getId() != null) {
+			return this.jdbcTemplate.update("DELETE TB_USER WHERE ID = ?", user.getId());
+		} else if (user.getCpf() != null) {
+			return this.jdbcTemplate.update("DELETE TB_USER WHERE CPF = ?", user.getCpf());
+		} else {
+			throw new IllegalArgumentException("Can't delete user without id and cpf");
+		}
+	}
+
 	public List<User> findAll() {
 		return jdbcTemplate.query("SELECT ID, FIRST_NAME, LAST_NAME, CPF FROM TB_USER", UserRowMapper.getInstance());
 	}
